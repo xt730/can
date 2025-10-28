@@ -842,16 +842,16 @@ ARM Macro Assembler    Page 13
               00000200 
               00000000 
 Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M4.fp.sp --apcs=
-interwork --depend=can\startup_stm32f407xx.d -ocan\startup_stm32f407xx.o -I.\RT
+interwork --depend=can\startup_stm32f407xx.d -ocan\startup_stm32f407xx.o -I../D
 
 
 
 ARM Macro Assembler    Page 14 
 
 
-E\_CAN -ID:\keil\Pack\ARM\CMSIS\6.1.0\CMSIS\Core\Include --predefine="__UVISION
-_VERSION SETA 542" --predefine="STM32F407xx SETA 1" --predefine="_RTE_ SETA 1" 
---list=startup_stm32f407xx.lst startup_stm32f407xx.s
+rivers/CMSIS/Include -I.\RTE\_CAN -ID:\keil\Pack\ARM\CMSIS\6.1.0\CMSIS\Core\Inc
+lude --predefine="__UVISION_VERSION SETA 542" --predefine="STM32F407xx SETA 1" 
+--predefine="_RTE_ SETA 1" --list=startup_stm32f407xx.lst startup_stm32f407xx.s
 
 
 

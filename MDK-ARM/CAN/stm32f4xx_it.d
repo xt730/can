@@ -31,3 +31,12 @@ can\stm32f4xx_it.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr.h
 can\stm32f4xx_it.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h
 can\stm32f4xx_it.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h
 can\stm32f4xx_it.o: ../Core/Inc/stm32f4xx_it.h
+can\stm32f4xx_it.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h
+can\stm32f4xx_it.o: ../Core/Inc/FreeRTOSConfig.h
+can\stm32f4xx_it.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h
+can\stm32f4xx_it.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/portable.h
+can\stm32f4xx_it.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/deprecated_definitions.h
+can\stm32f4xx_it.o: ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F/portmacro.h
+can\stm32f4xx_it.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/mpu_wrappers.h
+can\stm32f4xx_it.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/task.h
+can\stm32f4xx_it.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/list.h

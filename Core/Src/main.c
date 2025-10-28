@@ -18,6 +18,7 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+#include "cmsis_os.h"
 #include "can.h"
 #include "usart.h"
 #include "gpio.h"
@@ -26,11 +27,13 @@
 /* USER CODE BEGIN Includes */
 #include "motor.h"
 #include <stdio.h>
+#include "pid.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
-
+float motor_data[4];
+int target=0;
 /* USER CODE END PTD */
 
 /* Private define ------------------------------------------------------------*/
@@ -51,13 +54,43 @@
 
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
+void MX_FREERTOS_Init(void);
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+void drive()
+{
+	while(1)
+	{
+		deg_pid(target,&deg_k,motor_data);
+		speed_pid(deg_k.speed_output,&speed_k,motor_data);
+		//speed_pid(target,&speed_k,motor_data);
+		volt_gen(speed_k.speed_output,0,0,0,volt_val);
+		Motor_send(0x1FF,8,volt_val);
+		vTaskDelay(1);
+	}
+}
 
+void test()
+{
+	//target=200;
+	while(1)
+	{
+		//target+=2048;
+		//target%=8192;
+		target=1000;
+		deg_k.e_int=0;
+		speed_k.e_int=0;
+		vTaskDelay(500);
+		target=3000;
+		deg_k.e_int=0;
+		speed_k.e_int=0;
+		vTaskDelay(500);
+	}
+}
 /* USER CODE END 0 */
 
 /**
@@ -94,15 +127,32 @@ int main(void)
   MX_USART6_UART_Init();
   /* USER CODE BEGIN 2 */
 	can_filter_init();
+	uint8_t buf[8]={0x07,0xD0,0x07,0xD0,0x07,0xD0,0x07,0xD0};
+	speed_k.kp=0;speed_k.ki=6;speed_k.kd=1;speed_k.epsilon=200;
+	deg_k.kp=2.4;deg_k.ki=0;deg_k.kd=20;deg_k.epsilon=100;
   /* USER CODE END 2 */
+
+  /* Call init function for freertos objects (in cmsis_os2.c) */
+  MX_FREERTOS_Init();
+
+  /* Start scheduler */
+  osKernelStart();
+
+  /* We should never get here as control is now taken by the scheduler */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-	char buffer[30];
+	//char buffer[30];
+	
+	
   while (1)
   {
-		sprintf(buffer,"%06d,%06d,%06d,%06d\n",motor_data[0],motor_data[1],motor_data[2],motor_data[3]);
-		HAL_UART_Transmit(&huart6,buffer,28,HAL_MAX_DELAY);
+	//	sprintf(buffer,"%06d,%06d,%06d,%06d\n",motor_data[0],motor_data[1],motor_data[2],motor_data[3]);
+		//Motor_send(0x1FF,8,buf);
+		
+		//speed_pid(200,&speed_k,motor_data);
+		
+		//HAL_UART_Transmit(&huart6,buffer,28,HAL_MAX_DELAY);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
